@@ -31,7 +31,14 @@ gate to escape.
 
 **Controls** — Move: WASD / Arrow keys · Sprint: Shift · Jump: Space ·
 Crouch: C · Mute: M. Title screen, HUD (score, distance, stage, lives,
-stamina, escape progress), and caught / escaped end screens with restart.
+stamina, and an escape-progress road labelled with all three stages and
+your marker on it), and caught / escaped end screens with restart. A
+first run coaches itself: the first time each danger shows up — a knife
+glinting in, an oven's glow, Bram spotting you or searching for you — a
+one-line hint says what to do about it. Reach the gate and the escape
+screen grades the run (S / A / B / C, from lives left and the clock) and
+itemises it: distance, time, corn, close calls, lives, final score. Get
+caught and it tells you what percentage of the way to the gate you made.
 
 ## Layout
 

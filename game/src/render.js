@@ -64,6 +64,35 @@ function drawBackground(ctx, camX) {
   ctx.fillStyle = 'rgba(0,0,0,0.13)';
   ctx.fillRect(0, FIELD_TOP + 26, VIEW_WIDTH, 5);
   if (stage === 0) drawTileLines(ctx, camX);
+  else drawGroundTexture(ctx, camX, stage);
+}
+
+function drawGroundTexture(ctx, camX, stage) {
+  // Sparse ground detail so the long fields do not read as one flat
+  // wash: grass tufts and pebbles pinned to world positions by a hash,
+  // scrolling with the world and identical in every frame.
+  parallaxX(camX, 1, 90, (x) => {
+    const idx = Math.round((x + camX) / 90);
+    const h = ((idx * 2654435761) % 1000) / 1000;
+    const y = FIELD_TOP + 66 + h * (VIEW_HEIGHT - FIELD_TOP - 120);
+    if (h < 0.45) {
+      ctx.strokeStyle = stage === 2 ? 'rgba(30,52,22,0.5)' : 'rgba(84,52,20,0.45)';
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x - 3, y - 7 - h * 4);
+      ctx.moveTo(x + 3, y);
+      ctx.lineTo(x + 4, y - 6 - h * 3);
+      ctx.moveTo(x + 6, y);
+      ctx.lineTo(x + 9, y - 5);
+      ctx.stroke();
+    } else if (h > 0.8) {
+      ctx.fillStyle = 'rgba(60,40,20,0.28)';
+      ctx.beginPath();
+      ctx.ellipse(x + 20, y, 5, 2.4, 0, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  });
 }
 
 function parallaxX(camX, factor, spacing, fn) {
@@ -590,16 +619,32 @@ function drawKnife(ctx, knife, sx, now) {
   const x = sx;
   const y = knife.y - 24;
   if (!knife.flying) {
-    // The warning glint: a four-point sparkle where the knife will come from.
+    // The warning glint: a haloed sparkle where the knife will come
+    // from, big enough to read at a glance — it is the only warning
+    // the player gets, so it has to shout.
     const pulse = 0.6 + 0.4 * Math.sin(now * 26);
+    const r = 13 * pulse + 5;
+    ctx.fillStyle = `rgba(255,214,120,${0.2 * pulse})`;
+    ctx.beginPath();
+    ctx.arc(x, y, r + 10, 0, Math.PI * 2);
+    ctx.fill();
     ctx.strokeStyle = `rgba(255,240,190,${pulse})`;
-    ctx.lineWidth = 2.4;
-    const r = 11 * pulse + 4;
+    ctx.lineWidth = 2.6;
     ctx.beginPath();
     ctx.moveTo(x - r, y);
     ctx.lineTo(x + r, y);
     ctx.moveTo(x, y - r);
     ctx.lineTo(x, y + r);
+    const d = r * 0.66;
+    const e = r * 0.34;
+    ctx.moveTo(x - d, y - d);
+    ctx.lineTo(x - e, y - e);
+    ctx.moveTo(x + d, y - d);
+    ctx.lineTo(x + e, y - e);
+    ctx.moveTo(x - d, y + d);
+    ctx.lineTo(x - e, y + e);
+    ctx.moveTo(x + d, y + d);
+    ctx.lineTo(x + e, y + e);
     ctx.stroke();
     return;
   }

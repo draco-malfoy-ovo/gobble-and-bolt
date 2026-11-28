@@ -18,7 +18,7 @@ import {
 import { STEP_SECONDS, VIEW_HEIGHT, VIEW_WIDTH } from './config.js';
 import { createInput } from './input.js';
 import { cameraFor, drawWorld } from './render.js';
-import { drawEndScreen, drawHud, drawTitleScreen } from './screens.js';
+import { drawEndScreen, drawHints, drawHud, drawTitleScreen } from './screens.js';
 import { createGame, startRun, stepSimulation } from './sim.js';
 
 const canvas = document.getElementById('game');
@@ -110,6 +110,7 @@ function frame(timestamp) {
 
   if (game.phase === 'playing') {
     drawHud(ctx, game);
+    drawHints(ctx, game, now);
     ctx.textAlign = 'center';
     ctx.font = 'bold 15px Georgia, serif';
     for (let i = popups.length - 1; i >= 0; i--) {

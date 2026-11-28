@@ -20,7 +20,11 @@ Woods — three stages, one gate, no gravy.
 
 Farmer Bram chases what he can see, hurries to the last place he saw you
 when he loses you, searches, and gives up — break his line of sight behind
-hay, pines or a kitchen island and he drops off your tail. Carving knives
+hay, pines or a kitchen island and he drops off your tail. You can watch
+him think: his gaze is drawn as a cone, pale while he patrols, amber
+while he searches the spot he last saw you (her faint silhouette still
+hangs there), red with a "!" the moment he is on you — and whatever
+blocks the cone is exactly what hides you. Carving knives
 fly in at carving height after a glint and a whistle: crouch or change
 lanes. Corn scores points and restores stamina. Three lives; reach the
 gate to escape.
@@ -34,14 +38,16 @@ stamina, escape progress), and caught / escaped end screens with restart.
 - `main.ts` — the hand-in program: copies `game/` and `screenshots/` to the
   output directory and writes `dossier.json` with the vendored library.
 - `game/` — the game itself: static files, no build step, no network.
-  - `game/src/sim.js` — the pure fixed-step simulation (seeded, deterministic)
+  - `game/src/sim.js` — the whole game as a step-by-step simulation: same seed, same run, every time
   - `game/src/world.js` — the seeded route: stages, ovens, occluders, corn
   - `game/src/turkey.js` / `farmer.js` / `hazards.js` — the actors and dangers
   - `game/src/render.js` / `screens.js` — all canvas art, HUD and screens
   - `game/src/audio.js` — procedural WebAudio sound, no audio files
   - `game/src/input.js` / `main.js` — keys, boot and the game loop
 - `vendor/makefun-game.ts` — the kit's dossier library, unchanged.
-- `screenshots/` — four real renders of the game (title is the cover).
+- `screenshots/` — four real renders of the game: the farmyard chase
+  under the title (the cover), the kitchen mid-chase, Bram searching the
+  woods, and the escape screen.
 
 ## Play locally
 
